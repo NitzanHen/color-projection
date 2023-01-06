@@ -1,7 +1,5 @@
-import { Component, createEffect, createMemo, createSignal } from 'solid-js';
+import { Component, createEffect, createMemo } from 'solid-js';
 import styles from './app.module.css';
-import { RGB, fromRGB, gramschmidt, project as logicProject } from './logic';
-import Color from 'color';
 import { projectImage } from './projectImage';
 import { addColor, colorBasis, colors, numColors, removeColor, setColor } from './state/colors';
 import { imageData, setImageData } from './state/image';
@@ -20,7 +18,7 @@ const App: Component = () => {
   let source: HTMLCanvasElement | undefined;
   let target: HTMLCanvasElement | undefined;
 
-  const projectOntoCanvas = () => imageData() && projectImage(imageData()!, numColors());
+  const projectOntoCanvas = createMemo(() => imageData() && projectImage(imageData()!, numColors()));
 
   const handleColor = (e: ColorEvent) => {
     e.preventDefault();
