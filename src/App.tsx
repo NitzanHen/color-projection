@@ -3,6 +3,8 @@ import styles from './app.module.css';
 import { RGB, fromRGB, gramschmidt, project as logicProject } from './logic';
 import Color from 'color';
 import { projectImage } from './projectImage';
+import { addColor, colorBasis, colors, numColors, removeColor, setColor } from './state/colors';
+import { imageData, setImageData } from './state/image';
 
 type SubmitEvent = InputEvent & {
   currentTarget: HTMLInputElement;
@@ -18,18 +20,7 @@ const App: Component = () => {
   let source: HTMLCanvasElement | undefined;
   let target: HTMLCanvasElement | undefined;
 
-  const [numColors, setNumColors] = createSignal<number>(2);
-  const addColor = () => setNumColors(n => n + 1);
-  const removeColor = () => setNumColors(n => n - 1);
-  const [colors, setColors] = createSignal<(string | undefined)[]>(['#ff0000', '#00ff00', '#0000ff']);
-  const basis = createMemo(
-    () => gramschmidt(colors().map(c => new Color(c).rgb().array() as RGB))
-  );
-
-  const [imageData, setImageData] = createSignal<ImageData>();
-  const project = createMemo(
-    () => imageData() && projectImage(imageData()!, numColors())
-  );
+  const projectOntoCanvas = () => imageData() && projectImage(imageData()!, numColors());
 
   const handleColor = (e: ColorEvent) => {
     e.preventDefault();
@@ -38,16 +29,13 @@ const App: Component = () => {
     const input = e.currentTarget;
     const index = parseInt((input.name as string).slice(-1));
 
-    setColors(
-      colors => colors.map(
-        (c, i) => i === index ? input.value : c)
-    );
+    setColor(index, input.value);
   }
 
   const handleImage = (e: SubmitEvent) => {
     const file = e.currentTarget.files?.[0];
     if (!file) {
-      return;
+      return; 
     }
 
     const image = document.createElement('img');
@@ -70,7 +58,8 @@ const App: Component = () => {
 
   let container: HTMLDivElement | undefined;
   let currentCanvas: HTMLCanvasElement | null = null;
-  const projectedCanvas = createMemo(() => project()?.(basis()));
+  const projectedCanvas = createMemo(() => projectOntoCanvas()?.(colorBasis()));
+  
   createEffect(() => {
     const canvas = projectedCanvas();
     if (!canvas) {
