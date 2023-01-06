@@ -7,10 +7,14 @@ export { numColors };
 export const addColor = () => setNumColors(n => n + 1);
 export const removeColor = () => setNumColors(n => n - 1);
 
-const [colors, setColors] = createSignal<(string | undefined)[]>(['#ff0000', '#00ff00', '#0000ff']);
+const [colors, setColors] = createSignal<Color[]>([
+  new Color('#FF0000'),
+  new Color('#00FF00'),
+  new Color('#0000FF'),
+]);
 export { colors };
 
-export const setColor = (index: number, color: string) => 
+export const setColor = (index: number, color: Color) => 
   setColors(
     colors => colors.map(
       (c, i) => i === index ? color : c)
@@ -18,5 +22,5 @@ export const setColor = (index: number, color: string) =>
 
 
 export const colorBasis = createMemo(
-  () => gramschmidt(colors().map(c => new Color(c).rgb().array() as RGB))
+  () => gramschmidt(colors().slice(0, numColors()).map(c => c.rgb().array() as RGB))
 );

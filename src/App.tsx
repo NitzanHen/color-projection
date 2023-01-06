@@ -1,6 +1,8 @@
+import Color from 'color';
 import { Component, createEffect, createMemo } from 'solid-js';
 import styles from './app.module.css';
 import { projectImage } from './projectImage';
+import { Simulation } from './Simulation';
 import { addColor, colorBasis, colors, numColors, removeColor, setColor } from './state/colors';
 import { imageData, setImageData } from './state/image';
 
@@ -27,13 +29,13 @@ const App: Component = () => {
     const input = e.currentTarget;
     const index = parseInt((input.name as string).slice(-1));
 
-    setColor(index, input.value);
+    setColor(index, new Color(input.value));
   }
 
   const handleImage = (e: SubmitEvent) => {
     const file = e.currentTarget.files?.[0];
     if (!file) {
-      return; 
+      return;
     }
 
     const image = document.createElement('img');
@@ -57,7 +59,7 @@ const App: Component = () => {
   let container: HTMLDivElement | undefined;
   let currentCanvas: HTMLCanvasElement | null = null;
   const projectedCanvas = createMemo(() => projectOntoCanvas()?.(colorBasis()));
-  
+
   createEffect(() => {
     const canvas = projectedCanvas();
     if (!canvas) {
@@ -80,7 +82,7 @@ const App: Component = () => {
       <div class={styles.colors}>
         <button onClick={removeColor} disabled={numColors() <= 1}>-</button>
         {[...Array(numColors()).keys()].map(i => (
-          <input type='color' name={`color${i}`} value={colors()[i]} onInput={handleColor} />
+          <input type='color' name={`color${i}`} value={new Color(colors()[i]).hex()} onInput={handleColor} />
         ))}
         <button onClick={addColor} disabled={numColors() >= 3}>+</button>
       </div>
@@ -88,6 +90,7 @@ const App: Component = () => {
         <canvas ref={source} />
         <canvas ref={target} />
       </div>
+      <Simulation />
     </div>
   );
 };
