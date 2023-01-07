@@ -1,0 +1,41 @@
+.zone {
+  padding: 5em;
+  border-radius: 1em;
+  border: 4px dashed hsla(0, 0%, 100%, 0.4);
+  background-color: hsla(0, 0%, 100%, 0.03);
+  transition: background-color 50ms ease-in;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+}
+
+.zone p {
+  margin: 0;
+}
+
+.zone input[type='file'] {
+  display: none;
+}
+
+.prompt {
+  font-size: 1.8em;
+  color: hsla(0, 0%, 100%, 0.75);
+}
+
+.subprompt {
+  color: hsla(0, 0%, 100%, 0.4);
+}
+
+.subprompt a {
+  background-color: transparent;
+  border: none;
+  color: hsla(0, 0%, 100%, 0.75);
+  font-style: normal;
+  cursor: pointer;
+}
+
+.dragHover { 
+  background-color: hsla(0, 0%, 100%, 0.3);
+}

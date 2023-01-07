@@ -10,9 +10,9 @@ export const Simulation: Component = () => {
     const scene = new Scene();
     const camera = new PerspectiveCamera(50, 1, 0.1, 1000);
 
-    const renderer = new WebGLRenderer({ canvas });
+    const renderer = new WebGLRenderer({ canvas, alpha: true });
     renderer.localClippingEnabled = true;
-    renderer.setSize(500, 500);
+    renderer.setSize(300, 300);
 
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.target.set(0.5, 0.5, 0.5);
@@ -22,7 +22,6 @@ export const Simulation: Component = () => {
       new LineBasicMaterial({ color: 'white', transparent: true, opacity: 0.4 })
     );
     outline.position.set(0.5, 0.5, 0.5);
-    console.log(outline.position.toArray());
     
     scene.add(outline);
 
@@ -45,7 +44,7 @@ export const Simulation: Component = () => {
     scene.add(greenAxis);
 
 
-    camera.position.set(1.5, 1.5, 1.5);
+    camera.position.set(0.75, 0.75, 2.25);
 
     const group = new Group();
     scene.add(group);

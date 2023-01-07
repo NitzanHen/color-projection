@@ -1,0 +1,51 @@
+.sidebar {
+  background-color: hsl(38, 7%, 5%);
+}
+
+.title > h1 {
+  text-align: center;
+  margin: 0;
+  padding: 0.5em;
+  font-size: 1.75em;
+}
+
+.sidebarBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2em;
+}
+
+.colorPicker {
+  padding: 2em;
+}
+
+.colorControls {
+  margin: 0 2em;
+  margin-bottom: 0.5em;
+
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  gap: 1em;
+
+}
+
+.button {
+  flex: 1 0 0;
+  background-color: hsl(0, 0%, 30%);
+  padding: 0.5em 1em;
+  border-radius: 9999px;
+
+  transition: background-color 50ms ease-in, color 50ms ease-in;
+}
+
+.button:disabled {
+  cursor: auto;
+  background-color: hsl(0, 0%, 20%);
+  color: hsl(0, 0%, 50%);
+}
+
+.button:not(:disabled):hover {
+  background-color: hsl(0, 0%, 40%);
+}

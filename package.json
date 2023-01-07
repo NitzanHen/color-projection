@@ -12,11 +12,13 @@
   "devDependencies": {
     "@types/color": "^3.0.3",
     "@types/three": "^0.148.0",
+    "agrippa": "^2.0.0",
     "typescript": "^4.9.4",
     "vite": "^4.0.3",
     "vite-plugin-solid": "^2.5.0"
   },
   "dependencies": {
+    "@jaames/iro": "^5.5.2",
     "color": "^4.2.3",
     "gpu.js": "^2.16.0",
     "solid-js": "^1.6.6",

@@ -1,13 +1,14 @@
 .app {
+  width: 100%;
+  height: 100%;
   margin: 0 auto;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: max-content 1fr;
 }
 
-.images {
+.main {
+  padding: 2em;
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  flex-wrap: wrap;
+  justify-content: center;
 }
