@@ -14,7 +14,6 @@ export const ImageDisplay = (props: ImageDisplayProps) => {
 		createEffect(() => {
 			const data = imageData();
 			if (data) {
-				console.log('!', data, canvas);
 				canvas.width = data.width;
 				canvas.height = data.height;
 

@@ -18,8 +18,12 @@ export const ImagePicker = (props: ImagePickerProps) => {
 		e.preventDefault();
 		setDragHover(false);
 		const file = e.dataTransfer?.files[0];
+		if (!file) {
+			return;
+		}
 
-		handleImage(file);
+		const url = URL.createObjectURL(file);
+		processImage(url);
 	}
 
 	const handleDragOver = (e: DragEvent) => {
@@ -32,13 +36,28 @@ export const ImagePicker = (props: ImagePickerProps) => {
 		setDragHover(false);
 	}
 
-	const handleImage = (file: File | undefined) => {
+	const handleUpload = (e: SubmitEvent) => {
+		e.preventDefault();
+		const file = e.currentTarget.files?.[0];
 		if (!file) {
 			return;
 		}
 
+		const url = URL.createObjectURL(file);
+		processImage(url);
+	}
+
+	const getRandomImage = () => {
+		const size = Math.floor(0.4 * Math.max(window.innerWidth - 250, window.innerHeight - 100))
+		const src = `https://picsum.photos/${size}`
+		processImage(src);
+	}
+
+	const processImage = (src: string) => {
+
 		const image = document.createElement('img');
-		image.src = URL.createObjectURL(file);
+		image.src = src;
+		image.crossOrigin = 'anonymous';
 
 		image.addEventListener('load', function () {
 			const width = this.width;
@@ -58,9 +77,9 @@ export const ImagePicker = (props: ImagePickerProps) => {
 		<div onDragOver={handleDragOver} onDrop={handleDrop} onDragLeave={handleDragLeave} classList={{ [styles.zone]: true, [styles.dragHover]: dragHover() }}>
 			<p class={styles.prompt}>Drag and drop an image to get started!</p>
 			<p class={styles.subprompt}>
-				Or, <a role='button' onClick={() => input?.click()}>browse</a> for one manually
+				Alternatively, <a role='button' onClick={() => input?.click()}>browse</a> for an image file, or <a role='button' onClick={getRandomImage}>pick one at random</a>.
 			</p>
-			<input ref={input} type='file' accept='image/*' onChange={e => handleImage(e.currentTarget.files?.[0])} />
+			<input ref={input} type='file' accept='image/*' onChange={handleUpload} />
 		</div>
 	);
 };
